@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from 'next/link';
-
+import { HiShoppingCart } from "react-icons/hi2";
 
 export default function Heading() {
   return (
@@ -11,7 +11,10 @@ export default function Heading() {
         </Link>
         <h1 className="text-3xl font-bold text-color_four">HandCrafted Heaven</h1>
       </div>
-      <Link href='/login' className="w-10 mt-2 text-sm font-medium text-color_four hover:text-color_five md:mt-0">Login</Link>
+      <div className="flex space-x-6">
+        <Link href='/login' className="w-10 mt-2 text-sm font-medium text-color_four hover:text-color_five md:mt-0">Login</Link>
+        <Link href='/cart' className="w-10 mt-2 md:mt-0"><HiShoppingCart /></Link>
+      </div>
     </header>
   );
 }
