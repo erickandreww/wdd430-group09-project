@@ -1,5 +1,5 @@
 import Hero from "./ui/home-page/hero";
-import RandomProducts from "./ui/random-products";
+import RandomProducts from "./ui/home-page/random-products";
 
 export default function Page() {
   return (
