@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from 'next/link';
-// import { HiShoppingCart } from "react-icons/hi2";
+import { HiShoppingCart } from "react-icons/hi2";
 
 export default function Heading() {
   return (
@@ -13,7 +13,7 @@ export default function Heading() {
       </div>
       <div className="flex space-x-6">
         <Link href='/login' className="w-10 mt-2 text-sm font-medium text-color_four hover:text-color_five md:mt-0">Login</Link>
-        {/* <Link href='/cart' className="w-10 mt-2 md:mt-0"><HiShoppingCart /></Link> */}
+        <Link href='/cart' className="w-10 mt-2 md:mt-0"><HiShoppingCart /></Link>
       </div>
     </header>
   );
