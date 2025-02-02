@@ -1,4 +1,5 @@
 import Hero from "./ui/home-page/hero";
+import RandomProducts from "./ui/random-products";
 
 export default function Page() {
   return (
@@ -10,7 +11,7 @@ export default function Page() {
           <h2>Story of the page</h2>
           <p>here we will put the story of the page, a small description of it</p>
         </section>
-        {/* <RandomProducts/> */}
+        <RandomProducts/>
       </main>
     </>
   );
