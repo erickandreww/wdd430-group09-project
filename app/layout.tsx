@@ -24,13 +24,15 @@ export default function RootLayout({
         className={`${lato.className} ${roboto.className} antialiased`}
       >
         <Heading />
-        <div className="flex flex-col md:flex-row md:overflow-hidden">
+        <div className="flex flex-col min-h-screen md:flex-row md:overflow-hidden">
           <div className="w-full bg-color_two md:w-56">
             <Nav />
           </div>
           <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
         </div>
-        <Footer />
+        <div className="">
+          <Footer />
+        </div>
       </body>
     </html>
   );
