@@ -1,4 +1,6 @@
 // app/products/page.tsx
+import Pagination from "../ui/products/pagination";
+import Search from "../ui/search";
 import { Metadata } from "next";
 import Image from 'next/image';
 
@@ -39,10 +41,22 @@ const products: Product[] = [
   // Add more products as needed
 ];
 
-export default function Page() {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Products</h1>
+      <div className="">
+        <Search placeholder="Search products..."/>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map(product => (
           <div key={product.id} className="border rounded-lg overflow-hidden shadow-lg">
@@ -60,6 +74,9 @@ export default function Page() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="">
+        <Pagination totalPages={10} />
       </div>
     </div>
   );
