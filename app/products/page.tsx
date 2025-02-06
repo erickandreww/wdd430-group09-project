@@ -17,16 +17,16 @@ interface Product {
 const products: Product[] = [
   {
     id: 1,
-    name: 'Local Artist 1',
-    description: 'A beautiful painting that captures the essence of nature.',
-    image: '/app/products/artist1.jpeg', 
-    price: '$100',
+    name: 'Clay Pitcher',
+    description: 'A clay Spanish inspired pitcher ',
+    image: '/product1.webp', 
+    price: '$30',
   },
   {
     id: 2,
-    name: 'Local Artist 2',
-    description: 'An abstract piece that brings color and life to any space.',
-    image: '/UI/home-page/artist2.jpeg', // Update with the correct path
+    name: 'Handmade Quilt',
+    description: 'A handmade quilt pieced together with vintage fabric',
+    image: '/product2.jpeg', // Update with the correct path
     price: '$150',
   },
   {

@@ -10,7 +10,7 @@ interface Artist {
 
 const artists: Artist[] = [
   { id: 1, name: 'Artist 1', image: '/artist1.jpeg', description: 'Description of Artist 1' },
-  { id: 2, name: 'Artist 2', image: '/artist2.jpg', description: 'Description of Artist 2' },
+  { id: 2, name: 'Artist 2', image: '/artist2.jpeg', description: 'Description of Artist 2' },
   { id: 3, name: 'Artist 3', image: '/artist2.jpg', description: 'Description of Artist 3' },
   // Add more artists as needed
 ];
