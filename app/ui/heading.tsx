@@ -9,7 +9,7 @@ export default function Heading() {
         <Link href='/'>
           <Image src='/logo.png' alt='this is the logo of the page' width={100} height={100} className="rounded-full"/>
         </Link>
-        <h1 className="text-3xl font-bold text-color_four">HandCrafted Heaven</h1>
+        <h1 className="text-3xl font-bold text-color_four">HandCrafted Haven</h1>
       </div>
       <div className="flex space-x-8">
         <Link href='/login' className="w-12 mt-2 font-medium text-color_four hover:text-color_five md:mt-0">Login</Link>

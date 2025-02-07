@@ -25,3 +25,28 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero-section {
+  background-color: #f9fafb; /* Light background for the hero section */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.artist-card {
+  background-color: #ffffff; /* White background for artist cards */
+  transition: transform 0.2s;
+}
+
+.artist-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.artist-card img {
+  border-bottom: 4px solid #3b82f6; /* Blue border under the image */
+}
