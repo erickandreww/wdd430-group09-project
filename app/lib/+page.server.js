@@ -142,13 +142,13 @@ export async function load() {
       const { rows: cart} = await sql`SELECT * FROM cart`;
       const { rows: reviews} = await sql`SELECT * FROM reviews`;
       const duration = Date.now() - startTime;
-      return Response.json({
+      return {
         users: users, 
         duration: duration,
         products: products,
         cart: cart,
         reviews: reviews,
-      }); 
+      }; 
     } else {
       throw error;
     }
