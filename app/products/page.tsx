@@ -1,10 +1,13 @@
 // app/products/page.tsx
+"use client";
 import { Metadata } from "next";
 import Image from 'next/image';
+import { useCart } from '../../context/cartContext'; // Import the useCart hook
 
-export const metadata: Metadata = {
-  title: 'Products',
-};
+// Define metadata for the page
+//export const metadata: Metadata = {
+//  title: 'Products',
+//};
 
 interface Product {
   id: number;
@@ -26,20 +29,29 @@ const products: Product[] = [
     id: 2,
     name: 'Handmade Quilt',
     description: 'A handmade quilt pieced together with vintage fabric',
-    image: '/product2.jpeg', // Update with the correct path
+    image: '/product2.jpeg',
     price: '$150',
   },
   {
     id: 3,
     name: 'Local Artist 3',
     description: 'A stunning sculpture that showcases craftsmanship.',
-    image: '/UI/home-page/artist3.jpeg', // Update with the correct path
+    image: '/UI/home-page/artist3.jpeg',
     price: '$200',
   },
   // Add more products as needed
 ];
 
+// Mark the component as a client component
 export default function Page() {
+  const { addToCart } = useCart(); // Use the addToCart function from the context
+
+  const handleAddToCart = (product: Product) => {
+    // Convert price to a number for easier calculations later
+    const priceNumber = parseFloat(product.price.replace('$', ''));
+    addToCart({ ...product, price: priceNumber }); // Add product to cart
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Products</h1>
@@ -57,6 +69,12 @@ export default function Page() {
               <h2 className="text-lg font-semibold">{product.name}</h2>
               <p className="text-sm text-gray-600">{product.description}</p>
               <p className="text-xl font-bold mt-2">{product.price}</p>
+              <button 
+                onClick={() => handleAddToCart(product)} 
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         ))}
