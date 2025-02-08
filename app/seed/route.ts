@@ -7,14 +7,15 @@ async function seed() {
       name VARCHAR(255) NOT NULL, 
       email VARCHAR(255) UNIQUE NOT NULL, 
       image VARCHAR(255),
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      status VARCHAR(255) NOT NULL,
     );
   `;
   console.log(`Created "user" table`)
 
   const createProductsTable = await sql`
     CREATE TABLE IF NOT EXISTS products(
-        product_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        product_id SERIAL PRIMARY KEY,
         product_name VARCHAR(255) NOT NULL,
         product_image VARCHAR(255) NOT NULL,
         product_price NUMERIC(9, 0) NOT NULL,
@@ -25,7 +26,7 @@ async function seed() {
 
   const productsUserRelation = await Promise.all([
     sql`
-      ALTER TABLE IF EXISTS product 
+      ALTER TABLE IF EXISTS products 
         ADD CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES users (user_id) MATCH SIMPLE
         ON UPDATE CASCADE
@@ -35,7 +36,7 @@ async function seed() {
 
   const createCartTable = await sql`
   CREATE TABLE IF NOT EXISTS cart(
-      cart UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      cart_id SERIAL PRIMARY KEY,
       product_name VARCHAR(255) NOT NULL,
       product_image VARCHAR(255) NOT NULL,
       product_price NUMERIC(9, 0) NOT NULL,
@@ -61,8 +62,8 @@ const cartUserRelation = await Promise.all([
 
 const createReviewTable = await sql `
   CREATE TABLE IF NOT EXISTS reviews(
-	cart UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    rating integer NOT NULL
+	review_id SERIAL PRIMARY KEY,
+  rating integer NOT NULL
 	review_text text NOT NULL,
 	review_date timestamp WITH time zone NOT NULL,
   );
@@ -132,16 +133,22 @@ export async function load() {
       duration: duration,
     };
   } catch (error) {
-    if (error === `relation "users" does not exists`) {
+    if (error.message === `relation "users" does not exists`) {
       console.log()
 
       await seed();
       const { rows: users} = await sql`SELECT * FROM users`;
+      const { rows: products} = await sql`SELECT * FROM products`;
+      const { rows: cart} = await sql`SELECT * FROM cart`;
+      const { rows: reviews} = await sql`SELECT * FROM reviews`;
       const duration = Date.now() - startTime;
-      return {
+      return Response.json({
         users: users, 
-        duration: duration
-      }; 
+        duration: duration,
+        products: products,
+        cart: cart,
+        reviews: reviews,
+      }); 
     } else {
       throw error;
     }
