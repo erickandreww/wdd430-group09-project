@@ -133,7 +133,7 @@ export async function load() {
       duration: duration,
     };
   } catch (error) {
-    if (error.message === `relation "users" does not exists`) {
+    if (error?.message === `relation "users" does not exists`) {
       console.log()
 
       await seed();
