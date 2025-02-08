@@ -3,6 +3,7 @@ import { lato, roboto } from "./ui/fonts";
 import Heading from "./ui/heading";
 import Footer from "./ui/footer";
 import Nav from "./ui/nav";
+import { CartProvider } from '../context/cartContext'; // Import the CartProvider
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,19 +21,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.className} ${roboto.className} antialiased`}
-      >
-        <Heading />
-        <div className="flex flex-col min-h-screen md:flex-row md:overflow-hidden">
-          <div className="w-full bg-color_two md:w-56">
-            <Nav />
+      <body className={`${lato.className} ${roboto.className} antialiased`}>
+        <CartProvider> {/* Wrap children with CartProvider */}
+          <Heading />
+          <div className="flex flex-col min-h-screen md:flex-row md:overflow-hidden">
+            <div className="w-full bg-color_two md:w-56">
+              <Nav />
+            </div>
+            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
           </div>
-          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
-        </div>
-        <div className="">
-          <Footer />
-        </div>
+          <div className="">
+            <Footer />
+          </div>
+        </CartProvider>
       </body>
     </html>
   );
