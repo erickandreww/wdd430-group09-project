@@ -1,4 +1,5 @@
 // app/cart/page.tsx
+"use client";
 import React from 'react';
 import { useCart } from '../../context/cartContext'; // Assuming you have a CartContext
 
