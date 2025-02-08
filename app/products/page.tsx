@@ -1,14 +1,10 @@
 // app/products/page.tsx
-"use client";
-import { Metadata } from "next";
+"use client"; // Ensure this is at the top of the file
+
 import Image from 'next/image';
 import { useCart } from '../../context/cartContext'; // Import the useCart hook
 
-// Define metadata for the page
-//export const metadata: Metadata = {
-//  title: 'Products',
-//};
-
+// Define the Product interface
 interface Product {
   id: number;
   name: string;
@@ -49,6 +45,7 @@ export default function Page() {
   const handleAddToCart = (product: Product) => {
     // Convert price to a number for easier calculations later
     const priceNumber = parseFloat(product.price.replace('$', ''));
+    // Add product to cart, including the image
     addToCart({ ...product, price: priceNumber }); // Add product to cart
   };
 
