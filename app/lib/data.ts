@@ -54,3 +54,48 @@ export async function fetchProductsPages(query: string) {
     throw new Error('Failed to fetch total number of invoices.');
   }
 }
+
+export async function getProductById(id: string) {
+  try {
+    const data = await sql`
+    SELECT 
+      products.product_id, 
+      products.product_name, 
+      products.product_image, 
+      products.product_price, 
+      products.product_description, 
+      products.product_quantity, 
+      products.purchase_number, 
+      users.name
+    FROM products JOIN users ON products.user_id = users.id
+    WHERE products.product_id = ${id};
+    `;
+
+    const product = data.rows.map((product) => ({
+      ...product
+    }))
+
+    return product[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch product.');
+  }
+}
+
+export async function getProductName(id: string) {
+  try {
+    const data = await sql`
+    SELECT 
+      products.product_name 
+    FROM products
+    WHERE products.product_id = ${id};
+    `;
+    
+    const productName = data.rows[0].product_name
+
+    return productName;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
+  }
+}
