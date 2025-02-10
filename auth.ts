@@ -7,12 +7,22 @@ import { checkUserExist, createNewUser } from "./app/lib/data"
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
   callbacks: {
-    async signIn({user: {name, email, image}}){
+    async signIn({user: {name, email, image}, profile}){
       const existingUser = await checkUserExist(email);
       if (!existingUser) {
-        await createNewUser(name,email,image)
+        await createNewUser(Number(profile?.id),name,email,image)
       }
       return true;
+    },
+    async jwt({token, account, profile}){
+      if (account && profile) {
+      token.id = profile?.id 
+      }
+      return token;
+    },
+    async session({session, token}){
+      Object.assign(session, {id: token.id})
+      return session;
     }
   }
 })

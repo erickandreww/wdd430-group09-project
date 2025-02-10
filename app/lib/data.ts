@@ -117,11 +117,37 @@ export async function checkUserExist(email: string | null| undefined){
   }
 }
 
-export async function createNewUser(name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
+export async function createNewUser(id:number, name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
   try {
     await sql 
-    `INSERT INTO users(name, email, image)
-     VALUES (${name}, ${email}, ${image})`
+    `INSERT INTO users(id, name, email, image)
+     VALUES (${id}, ${name}, ${email}, ${image})`
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getUserById(id:number){
+  try {
+    const data = await sql`
+    SELECT
+     * 
+    FROM users
+    WHERE id= ${id};
+    `
+    return data.rows
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function changeUserStatus(id:number){
+  try {
+    const status = "seller" 
+    const data = await sql`
+    UPDATE users SET status = ${status} WHERE id = ${id} RETURNING *;
+    `
+    return data.rows
   } catch (error) {
     console.error(error)
   }
