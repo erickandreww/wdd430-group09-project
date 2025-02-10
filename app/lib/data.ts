@@ -171,6 +171,20 @@ export async function changeUserStatus(id:number){
   }
 }
 
+export async function GetUserIdByEmail(email:string){
+  try {
+    const data = await sql`
+    SELECT
+     *
+    FROM users
+    WHERE email= ${email}
+    `
+    return data.rows
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // export async function addProductToCart(
 //   user_id: string, 
 //   quantity: string, 
