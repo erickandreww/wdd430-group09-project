@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import { ProductsCard } from "./definitions";
+import { FeaturedProducts, ProductsCard,  } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -17,8 +17,6 @@ export async function fetchProducts(
       products.product_image, 
       products.product_price, 
       products.product_description, 
-      products.product_quantity, 
-      products.purchase_number, 
       users.name
     FROM products 
     JOIN users ON products.user_id = users.id
@@ -32,7 +30,7 @@ export async function fetchProducts(
       return products.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch products.');
   }
 }
 
@@ -51,7 +49,7 @@ export async function fetchProductsPages(query: string) {
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of invoices.');
+    throw new Error('Failed to fetch total number of products.');
   }
 }
 
@@ -96,7 +94,27 @@ export async function getProductName(id: string) {
     return productName;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
+    throw new Error('Failed to fetch product name.');
+  }
+}
+
+export async function fetchFeaturedProducts() {
+  try {
+    const data = await sql<FeaturedProducts>`
+    SELECT product_id, product_name, product_image, product_price, product_description
+    FROM products
+    ORDER BY products.purchase_number DESC
+    LIMIT 6
+    `
+
+    const featuredProducts = data.rows.map((product => ({
+      ...product
+    })))
+
+    return featuredProducts; 
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the feature products.');
   }
 }
 
@@ -152,3 +170,22 @@ export async function changeUserStatus(id:number){
     console.error(error)
   }
 }
+
+// export async function addProductToCart(
+//   user_id: string, 
+//   quantity: string, 
+//   product_id: string
+// ) {
+
+//   const product = getProductById(product_id); 
+//   const {product_name, product_image, product_price} =  await product;
+
+//   try {
+//     `INSERT INTO cart (product_name, product_image, product_price, quantity, user_id, product_id)
+//     VALUES (${product_name}, ${product_image}, ${product_price}, ${quantity}, ${user_id}, ${product_id})
+//     `
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch the feature products.');
+//   }
+// }
