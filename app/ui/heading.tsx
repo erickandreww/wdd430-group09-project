@@ -25,7 +25,7 @@ export default async function Heading () {
               <button type="submit">Logout</button> 
             </form>
 
-            <Link href={`/user/${session?.id}`}>
+            <Link href={`/user/1`}>
               <span>{session?.user?.name}</span>
             </Link>
 

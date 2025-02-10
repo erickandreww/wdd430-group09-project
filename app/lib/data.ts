@@ -99,3 +99,30 @@ export async function getProductName(id: string) {
     throw new Error('Failed to fetch invoice.');
   }
 }
+
+export async function checkUserExist(email: string | null| undefined){
+  try {
+    const data = await sql`
+    SELECT
+     *
+    FROM users
+    WHERE email = ${email};
+    `
+
+    return data.rowCount;
+    
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.'); 
+  }
+}
+
+export async function createNewUser(name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
+  try {
+    await sql 
+    `INSERT INTO users(name, email, image)
+     VALUES (${name}, ${email}, ${image})`
+  } catch (error) {
+    console.error(error)
+  }
+}

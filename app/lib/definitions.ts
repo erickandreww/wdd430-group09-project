@@ -9,3 +9,10 @@ export type ProductsCard = {
   user_id: string;
   purchase_number: string;
 }
+
+export type UsersDefinitions = {
+  id: number;
+  name: string;
+  email: string;
+  image: string;
+}
