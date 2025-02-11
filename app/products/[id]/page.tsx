@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { getProductName } from "@/app/lib/data";
-import { getProductById } from "@/app/lib/data";
+import { getProductById, GetUserIdByEmail, getProductName } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import GetProduct from "@/app/ui/products/product";
+import { auth } from "@/auth";
 
 
 export async function generateMetadata(props: { params: Promise<{ id: string }>}): Promise<Metadata> {
@@ -23,9 +23,22 @@ export default async function Page(props: { params: Promise<{ id: string }>}) {
     notFound();
   }
 
+  let user_id
+  const session = await auth()
+  const email = session?.user?.email
+  if (!email) {
+    user_id = await GetUserIdByEmail(email);
+  } else {
+    user_id = "not logged";
+  }
+  
+  if (!product || product.product_quantity === 0) {
+    console.log("this product is not avaliable");
+  }
+  console.log("1");
   return (
     <div>
-      <GetProduct id={id}/>
+      <GetProduct product={product} user_id={user_id}/>
     </div>
   )
 }
