@@ -7,3 +7,5 @@ export const productSchema = z.object({
     product_quantity: z.coerce.number({message: "Product quantity is required"}).min(1, "Price quantity has to be at least 1").max(50, "Price quantity should be least than or equal 50"),
     id: z.string()
 })
+
+export type Product = z.infer<typeof productSchema>

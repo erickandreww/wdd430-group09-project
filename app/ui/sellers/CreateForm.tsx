@@ -1,26 +1,35 @@
 'use client';
 
 import { formHandlerAction } from "@/app/_actions/formHandler";
-import { StringMap } from "@/app/lib/product";
 import { redirect } from "next/navigation";
-import { useState } from "react";
 import toast from "react-hot-toast";
+import { Product, productSchema } from "@/app/_schemas/product";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 
 export default function Page({userId}: {userId: string}) {
-    const [errors, setErrors] = useState<StringMap>({});
 
+    const {register, handleSubmit, reset, formState:{errors, isSubmitting}}= useForm<Product>({
+        resolver: zodResolver(productSchema),
+        defaultValues:{
+            product_name: "",
+            product_image: "",
+            product_price: 0,
+            product_quantity: 0,
+            id: ""
+        },
+        mode: 'onChange'
+    })
 
-    const handleFormSubmit = async(formData: FormData) =>{
-        const{errors, successMsg} = await formHandlerAction(formData);
+    const onSubmit = async (product: Product)=>{
+        const {successMsg} = await formHandlerAction(product);
         if(successMsg){
-            toast.success('Product added!')
-            redirect('/sellers')
+            toast.success(successMsg);
         }
-        setErrors(errors || {});
-        console.log(errors, successMsg);
     }
   return <>
-      <form action={handleFormSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-y-4">
         <div>
           <label className="block " htmlFor="product_name">
@@ -29,12 +38,12 @@ export default function Page({userId}: {userId: string}) {
           <input
             type="text"
             className="w-full p-2 rounded-md text-gray-900"
-            name="product_name"
             id="product_name"
-            required
+            aria-required
+            {...register('product_name')}
           />
-            {errors?.product_name && (
-              <small className="text-red-400">{errors.product_name}</small>
+            {errors?.product_name &&(
+              <small className="text-red-400">{errors.product_name.message}</small>
             )}
         </div>
         <div>
@@ -44,12 +53,12 @@ export default function Page({userId}: {userId: string}) {
           <input
             type="text"
             className="w-full p-2 rounded-md text-gray-900"
-            name="product_image"
             id="product_image"
-            required
+            aria-required
+            {...register('product_image')}
           />
-            {errors?.product_image && (
-              <small className="text-red-400">{errors.product_image}</small>
+            {errors?.product_image &&(
+              <small className="text-red-400">{errors.product_image.message}</small>
             )}
         </div>
         <div>
@@ -58,14 +67,13 @@ export default function Page({userId}: {userId: string}) {
           </label>
           <input
             type="number"
-            name="product_price"
             className="w-full p-2 rounded-md text-gray-900"
             id="product_price"
-            required
-            min={1}
+            aria-required
+            {...register('product_price')}
           />
-            {errors?.product_price && (
-              <small className="text-red-400">{errors.product_price}</small>
+            {errors?.product_price &&(
+              <small className="text-red-400">{errors.product_price.message}</small>
             )}
         </div>
         <div>
@@ -75,14 +83,12 @@ export default function Page({userId}: {userId: string}) {
           <input
             type="number"
             className="w-full p-2 rounded-md text-gray-900"
-            name="product_quantity"
             id="product_quantity"
-            required
-            min={1}
-            max={20}
+            aria-required
+            {...register('product_quantity')}
           />
-            {errors?.product_quantity && (
-              <small className="text-red-400">{errors.product_quantity}</small>
+            {errors?.product_quantity &&(
+              <small className="text-red-400">{errors.product_quantity.message}</small>
             )}
         </div>
         <input
@@ -90,7 +96,7 @@ export default function Page({userId}: {userId: string}) {
             name="id"
             className="w-full p-2 rounded-md text-gray-900"
             id="id"
-            required
+            aria-required
             min={1}
             defaultValue={userId}
           />
@@ -98,7 +104,7 @@ export default function Page({userId}: {userId: string}) {
           className="bg-blue-500 py-2 px-4 rounded-md w-full hover:bg-blue-700"
           type="submit"
         >
-            Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>
