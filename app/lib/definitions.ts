@@ -25,7 +25,8 @@ export type ProductsInfo = {
   product_price: number;
   product_description: string;
   product_quantity: number; 
-  name: string;
+  user_id: string;
+  purchase_number: number;
 }
 
 export type UsersDefinitions = {
@@ -33,6 +34,7 @@ export type UsersDefinitions = {
   name: string;
   email: string;
   image: string;
+  status: string;
 }
 
 export type ProductToCart = {

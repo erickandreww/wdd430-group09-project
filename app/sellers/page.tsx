@@ -1,9 +1,18 @@
+import { auth } from "@/auth";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import UserProducts from "../ui/products/UserProducts";
 
 export const metadata: Metadata = {
-  title: 'Sellers'
+  title: 'Create Product'
 }
 
-export default function Page() {
-  return <p>Sellers Page</p>
+export default async function Page() {
+    const session = await auth()
+    if (!session) redirect("/login")
+  return(
+    <div className="container mx-auto p-4">
+      <UserProducts user_id={session? Number(session.id) : 0}/>
+    </div>
+  )    
 }

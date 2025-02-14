@@ -1,35 +1,42 @@
 'use client';
 
-import { formHandlerAction } from "@/app/_actions/formHandler";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
-import { Product, productSchema } from "@/app/_schemas/product";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Product, productEditSchema } from "@/app/_schemas/productEdit";
+import { formHandlerActionEdit } from "@/app/_actions/formHandlerEdit";
 
+interface ProductData{
+  product_name: string;
+  product_image: string;
+  product_price: number;
+  product_description: string;
+  product_quantity: number;
+  product_id: string;
+}
 
-export default function Page({userId}: {userId: string}) {
+export default function Page({productData}:{productData:ProductData | undefined}) {
     const {register, handleSubmit, formState:{errors, isSubmitting}}= useForm<Product>({
-        resolver: zodResolver(productSchema),
+        resolver: zodResolver(productEditSchema),
         defaultValues:{
-            product_name: "",
-            product_image: "",
-            product_price: 0,
-            product_description: "",
-            product_quantity: 0,
-            user_id: `${userId}`
+            product_name: `${productData?.product_name}`,
+            product_image: `${productData?.product_image}`,
+            product_price: Number(productData?.product_price),
+            product_description: `${productData?.product_description}`,
+            product_quantity: Number(productData?.product_quantity),
+            product_id: `${productData?.product_id}`
         },
         mode: 'onChange'
     })
 
     const onSubmit = async (product: Product)=>{
-        const {successMsg} = await formHandlerAction(product);
+        const {successMsg} = await formHandlerActionEdit(product);
         if(successMsg){
             toast.success(successMsg);
             redirect("/sellers")
         }
     }
-    if(!userId)redirect("/login")
   return <>
       <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-y-4">
@@ -110,10 +117,10 @@ export default function Page({userId}: {userId: string}) {
         <input
             type="hidden"
             className="w-full p-2 rounded-md text-gray-900"
-            id="user_id"
+            id="product_id"
             aria-required
             min={1}
-            {...register('user_id')}
+            {...register('product_id')}
           />
         <button
           className="bg-blue-500 py-2 px-4 rounded-md w-full hover:bg-blue-700"
