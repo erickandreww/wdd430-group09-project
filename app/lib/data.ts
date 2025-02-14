@@ -272,3 +272,14 @@ export async function alterProductById(
     }
 
 }
+
+export async function deleteProduct(product_id: string){
+  try {
+    await sql<ProductsInfo>
+    `
+      DELETE FROM products WHERE product_id = ${product_id}
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}

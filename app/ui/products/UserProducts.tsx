@@ -29,7 +29,7 @@ export default async function UserProducts({user_id} : {user_id: number}) {
             </Link>
             <div className='flex justify-between p-2 bg-slate-100 border rounded-lg overflow-hidden '>
               <Link href={`/sellers/edit-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_five md:mt-0">Edit</Link>
-              <Link href='/sellers/delete-product' className="w-12 mt-2 font-medium text-black hover:text-color_five md:mt-0">Delete</Link>
+              <Link href={`/sellers/delete-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_five md:mt-0">Delete</Link>
             </div>
           </div>
         </>
