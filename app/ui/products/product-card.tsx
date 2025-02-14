@@ -1,5 +1,7 @@
+"use server"
 import Image from "next/image";
 import Link from "next/link";
+import { ProductsInfo } from "@/app/lib/definitions";
 import { fetchProducts } from "@/app/lib/data";
 
 export default async function ProductCards({
@@ -9,7 +11,8 @@ export default async function ProductCards({
   query: string;
   currentPage: number;
 }) {
-  const products = await fetchProducts(query, currentPage);
+  const products: ProductsInfo[] = await fetchProducts(query, currentPage);
+  console.log(products)
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
