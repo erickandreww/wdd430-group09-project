@@ -10,7 +10,7 @@ export async function fetchProducts(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE; 
 
   try {
-    const products = await sql<ProductsCard>`
+    const products = await sql<ProductsInfo>`
     SELECT 
       products.product_id, 
       products.product_name, 
@@ -183,18 +183,52 @@ export async function GetUserIdByEmail(email: string | null| undefined){
 }
 
 export async function addProductToCart(
+  quantity: number,
   user_id: string, 
-  quantity: string, 
   product_id: string,
+ 
 ) {
-
-
   try {
-    await sql<ProductToCart>
-    `INSERT INTO cart(quantity, user_id, product_id)
+    await sql<ProductToCart>`INSERT INTO cart(quantity, user_id, product_id)
     VALUES (${quantity}, ${user_id}, ${product_id})
     `
   } catch (error) {
     console.error('Database Error:', error);
+  }
+}
+
+export async function getReviewsByProductId(id: string) {
+  try {
+    const data = await sql`
+    SELECT
+     reviews.review_id, 
+     reviews.rating, 
+     reviews.review_text, 
+     reviews.review_date, 
+     reviews.product_id, 
+     products.product_name,
+     users.name
+    FROM reviews 
+    INNER JOIN products ON reviews.product_id = products.product_id
+    INNER JOIN users ON products.user_id = users.id
+    WHERE reviews.product_id= ${id};
+    `
+    return data.rows
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getReviewsByUserId(id: string) {
+  try {
+    const data = await sql`
+    SELECT
+     * 
+    FROM reviews 
+    WHERE user_id = ${id};
+    `
+    return data.rows
+  } catch (error) {
+    console.error(error)
   }
 }
