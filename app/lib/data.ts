@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import { FeaturedProducts, ProductsCard, ProductToCart, ProductsInfo } from "./definitions";
+import { FeaturedProducts, ProductsCard, ProductToCart, ProductsInfo, UsersDefinitions } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -131,7 +131,7 @@ export async function checkUserExist(email: string | null| undefined){
 
 export async function createNewUser(id:number, name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
   try {
-    await sql 
+    await sql<UsersDefinitions>
     `INSERT INTO users(id, name, email, image)
      VALUES (${id}, ${name}, ${email}, ${image})`
   } catch (error) {
@@ -141,7 +141,7 @@ export async function createNewUser(id:number, name: string| null| undefined, em
 
 export async function getUserById(id:number){
   try {
-    const data = await sql`
+    const data = await sql<UsersDefinitions>`
     SELECT
      * 
     FROM users
@@ -167,7 +167,7 @@ export async function changeUserStatus(id:number){
 
 export async function GetUserIdByEmail(email: string | null| undefined){
   try {
-    const data = await sql`
+    const data = await sql<UsersDefinitions>`
     SELECT
      *
     FROM users
@@ -193,6 +193,91 @@ export async function addProductToCart(
     await sql<ProductToCart>
     `INSERT INTO cart(quantity, user_id, product_id)
     VALUES (${quantity}, ${user_id}, ${product_id})
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function createNewProduct(
+  product_name: string,
+  product_image: string,
+  product_price: number,
+  product_description:string,
+  product_quantity:number,
+  user_id:string
+){
+  try {
+    await sql<ProductsInfo>
+    `
+      INSERT INTO products(product_name, product_image, product_price, product_description, product_quantity, user_id)
+      VALUES(${product_name}, ${product_image}, ${product_price}, ${product_description}, ${product_quantity}, ${user_id})
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function getUserProducts(user_id: number){
+  try {
+    const data = await sql<ProductsInfo>
+    `
+      SELECT
+      *
+      FROM products
+      WHERE user_id = ${user_id};
+    `
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function productById(product_id: string){
+  try {
+    const data = await sql<ProductsInfo>
+    `
+      SELECT
+      *
+      FROM products
+      WHERE product_id = ${product_id} 
+    `
+    return data.rows[0]
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function alterProductById(
+  product_name: string,
+  product_image: string,
+  product_price: number,
+  product_description:string,
+  product_quantity:number,
+  product_id: string){
+    try {
+      await sql<ProductsInfo>
+      `
+      UPDATE products 
+      SET 
+      product_name=${product_name}, 
+      product_image=${product_image},
+      product_price=${product_price},
+      product_description=${product_description},
+      product_quantity=${product_quantity} 
+      WHERE product_id = ${product_id} RETURNING *
+      `
+    } catch (error) {
+      console.error('Database Error:', error);
+    }
+
+}
+
+export async function deleteProduct(product_id: string){
+  try {
+    await sql<ProductsInfo>
+    `
+      DELETE FROM products WHERE product_id = ${product_id}
     `
   } catch (error) {
     console.error('Database Error:', error);
