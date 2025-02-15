@@ -34,7 +34,7 @@ export async function fetchProducts(
     }
 }
 
-export async function fetchProductsPages(query: string) {
+export async function fetchProductsPages(query: string): Promise<number> {
   try {
     const count = await sql`SELECT COUNT(*)
     FROM products
@@ -49,6 +49,7 @@ export async function fetchProductsPages(query: string) {
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
+    return 1; 
   }
 }
 

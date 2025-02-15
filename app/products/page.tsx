@@ -18,7 +18,7 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchProductsPages(query);
+  const totalPages = (await fetchProductsPages(query)) || 1;
 
   return (
     <div className="container mx-auto p-4">
