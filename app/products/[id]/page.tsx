@@ -39,7 +39,7 @@ export default async function Page(props: { params: Promise<{ id: string }>}) {
       <GetProduct product={product} />
       
       <div className="bg-color_three p-4 rounded-lg shadow">
-        <ReviewsForm id={user_id} product_id={id} user={session.user} />
+        <ReviewsForm id={user_id} product_id={id} user={session?.user} />
       </div>
       
       <ProductReview id={id} />
