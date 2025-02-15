@@ -6,7 +6,7 @@ export default async function FeatureHomeProducts() {
     const featuredProducts = await fetchFeaturedProducts();
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {featuredProducts.map(product => (
+      {featuredProducts?.map(product => (
         <Link key={product.product_id} href={`products/${product.product_id}`}>
           <div className="artist-card border rounded-lg overflow-hidden shadow-lg">
             <Image 
