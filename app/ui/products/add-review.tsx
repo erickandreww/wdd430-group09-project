@@ -5,7 +5,7 @@ import { useState } from "react"
 import { sendReview } from "@/app/lib/data"
 import { SessionInfo } from "@/app/lib/definitions"
 
-export default function ReviewsForm({id, product_id, user}: {id:string, product_id: string, user: SessionInfo}) {
+export default function ReviewsForm({ id, product_id, user }: { id: string; product_id: string; user?: SessionInfo }) {
   const [input, setInput] = useState({ message: "", rating: "" });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -38,14 +38,14 @@ export default function ReviewsForm({id, product_id, user}: {id:string, product_
   return (
     <form onSubmit={handleSubmit} className="border rounded-lg shadow-md p-4 bg-color_three">
       <div className="flex items-center space-x-4 mb-4">
-        <Image 
-          src={user.image}
-          alt={`${user.name} image`}
-          width={50} 
-          height={50} 
-          className="rounded-full shadow"
-        />
-        <h4 className="text-lg text-color_four font-semibold">{user.name}</h4>
+      <Image 
+        src={user?.image ?? "/default-avatar.png"} 
+        alt={`${user?.name ?? "Anonymous"} image`} 
+        width={50} 
+        height={50} 
+        className="rounded-full shadow"
+      />
+      <h4 className="text-lg text-color_four font-semibold">{user?.name ?? "Anonymous"}</h4>
       </div>
 
       <div className="mb-4">
