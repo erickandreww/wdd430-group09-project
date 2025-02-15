@@ -1,23 +1,3 @@
-
-export type ProductsCard = {
-  product_id: string;
-  product_name: string;
-  product_image: string;
-  product_price: number;
-  product_description: string;
-  product_quantity: number; 
-  user_id: string;
-  purchase_number: string;
-}
-
-export type FeaturedProducts = {
-  product_id: string;
-  product_name: string;
-  product_image: string;
-  product_price: number;
-  product_description: string;
-}
-
 export type ProductsInfo = {
   product_id: string;
   product_name: string;
@@ -26,6 +6,14 @@ export type ProductsInfo = {
   product_description: string;
   product_quantity: number; 
   name: string;
+}
+
+export type FeaturedProducts = {
+  product_id: string;
+  product_name: string;
+  product_image: string;
+  product_price: number;
+  product_description: string;
 }
 
 export type UsersDefinitions = {
@@ -49,4 +37,11 @@ export type ReviewsList = {
   product_id: string;
   product_name: string; 
   name: string; 
+  image: string;
+}
+
+export type SessionInfo = {
+  name: string; 
+  email: string;
+  image: string;
 }

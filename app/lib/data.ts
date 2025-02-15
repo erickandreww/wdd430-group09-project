@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import { FeaturedProducts, ProductsCard, ProductToCart, ProductsInfo } from "./definitions";
+import { FeaturedProducts, ProductToCart, ProductsInfo, ReviewsList } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -27,10 +27,11 @@ export async function fetchProducts(
       ORDER BY products.purchase_number DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `
-      return products.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-  }
+      return products.rows || [];
+    } catch (error) {
+      console.error('Database Error:', error);
+      return [];
+    }
 }
 
 export async function fetchProductsPages(query: string) {
@@ -201,34 +202,15 @@ export async function getReviewsByProductId(id: string) {
   try {
     const data = await sql`
     SELECT
-     reviews.review_id, 
-     reviews.rating, 
-     reviews.review_text, 
-     reviews.review_date, 
-     reviews.product_id, 
-     products.product_name,
-     users.name
+     *
     FROM reviews 
-    INNER JOIN products ON reviews.product_id = products.product_id
-    INNER JOIN users ON products.user_id = users.id
+    JOIN products ON reviews.product_id = products.product_id
+    JOIN users ON reviews.user_id = users.id
     WHERE reviews.product_id= ${id};
     `
-    return data.rows
+    return data.rows as ReviewsList[];
   } catch (error) {
-    console.error(error)
-  }
-}
-
-export async function getReviewsByUserId(id: string) {
-  try {
-    const data = await sql`
-    SELECT
-     * 
-    FROM reviews 
-    WHERE user_id = ${id};
-    `
-    return data.rows
-  } catch (error) {
-    console.error(error)
+    console.error(error);
+    return []; 
   }
 }
