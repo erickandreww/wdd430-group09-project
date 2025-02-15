@@ -7,10 +7,10 @@ import { checkUserExist, createNewUser } from "./app/lib/data"
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
   callbacks: {
-    async signIn({user: {name, email, image}, profile}){
-      const existingUser = await checkUserExist(email);
+    async signIn({user, profile}){
+      const existingUser = await checkUserExist(user?.email);
       if (!existingUser) {
-        await createNewUser(Number(profile?.id),name,email,image)
+        await createNewUser(Number(profile?.id),user?.name,user?.email,user?.image)
       }
       return true;
     },
