@@ -4,6 +4,7 @@ import Heading from "./ui/heading";
 import Footer from "./ui/footer";
 import Nav from "./ui/nav";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +26,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen md:flex-row md:overflow-hidden">
           <Nav />
           <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+          <Toaster />
         </div>
         <Footer />
       </body>
