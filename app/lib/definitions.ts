@@ -21,6 +21,7 @@ export type UsersDefinitions = {
   name: string;
   email: string;
   image: string;
+  status: string;
 }
 
 export type ProductToCart = {
