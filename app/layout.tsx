@@ -25,8 +25,9 @@ export default function RootLayout({
         <Heading />
         <div className="flex flex-col min-h-screen md:flex-row md:overflow-hidden">
           <Nav />
-          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
-          <Toaster />
+          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}
+            <Toaster />
+          </div>
         </div>
         <Footer />
       </body>
