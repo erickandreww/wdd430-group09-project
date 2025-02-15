@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import { FeaturedProducts, ProductsCard, ProductToCart, ProductsInfo, UsersDefinitions } from "./definitions";
+import { FeaturedProducts, ProductToCart, ProductsInfo, UsersDefinitions, ReviewsList } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -10,7 +10,7 @@ export async function fetchProducts(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE; 
 
   try {
-    const products = await sql<ProductsCard>`
+    const products = await sql<ProductsInfo>`
     SELECT 
       products.product_id, 
       products.product_name, 
@@ -27,10 +27,11 @@ export async function fetchProducts(
       ORDER BY products.purchase_number DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `
-      return products.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-  }
+      return products.rows || [];
+    } catch (error) {
+      console.error('Database Error:', error);
+      return [];
+    }
 }
 
 export async function fetchProductsPages(query: string) {
@@ -167,7 +168,7 @@ export async function changeUserStatus(id:number){
 
 export async function GetUserIdByEmail(email: string | null| undefined){
   try {
-    const data = await sql<UsersDefinitions>`
+    const data = await sql`
     SELECT
      *
     FROM users
@@ -177,23 +178,6 @@ export async function GetUserIdByEmail(email: string | null| undefined){
     const user_id = data.rows[0].id
     return user_id;
     
-  } catch (error) {
-    console.error('Database Error:', error);
-  }
-}
-
-export async function addProductToCart(
-  user_id: string, 
-  quantity: string, 
-  product_id: string,
-) {
-
-
-  try {
-    await sql<ProductToCart>
-    `INSERT INTO cart(quantity, user_id, product_id)
-    VALUES (${quantity}, ${user_id}, ${product_id})
-    `
   } catch (error) {
     console.error('Database Error:', error);
   }
@@ -278,6 +262,55 @@ export async function deleteProduct(product_id: string){
     await sql<ProductsInfo>
     `
       DELETE FROM products WHERE product_id = ${product_id}
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function addProductToCart(
+  quantity: number,
+  user_id: string, 
+  product_id: string,
+ 
+) {
+  try {
+    await sql<ProductToCart>`INSERT INTO cart(quantity, user_id, product_id)
+    VALUES (${quantity}, ${user_id}, ${product_id})
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function getReviewsByProductId(id: string) {
+  try {
+    const data = await sql`
+    SELECT
+     *
+    FROM reviews 
+    JOIN products ON reviews.product_id = products.product_id
+    JOIN users ON reviews.user_id = users.id
+    WHERE reviews.product_id= ${id};
+    `
+    return data.rows as ReviewsList[];
+  } catch (error) {
+    console.error(error);
+    return []; 
+  }
+}
+
+export async function sendReview(
+  rating: string,
+  review_text: string,
+  product_id: number,
+  user_id:string,
+){
+  try {
+    await sql
+    `
+      INSERT INTO reviews(rating, review_text, product_id, user_id)
+      VALUES(${rating}, ${review_text}, ${product_id}, ${user_id})
     `
   } catch (error) {
     console.error('Database Error:', error);
