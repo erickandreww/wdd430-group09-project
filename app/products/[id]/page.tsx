@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { getProductById, GetUserIdByEmail, getProductName } from "@/app/lib/data";
 import { notFound } from "next/navigation";
-import GetProduct from "@/app/ui/products/product";
+// import GetProductForm from "@/app/ui/products/products-form";
+import GetProduct from '@/app/ui/products/product';
+import ProductReview from '@/app/ui/products/reviews';
+import ReviewsForm from '@/app/ui/products/add-review';
 import { auth } from "@/auth";
 
 
@@ -23,22 +26,23 @@ export default async function Page(props: { params: Promise<{ id: string }>}) {
     notFound();
   }
 
-  let user_id
+  let user_id = ''
   const session = await auth()
   const email = session?.user?.email
-  if (!email) {
+  if (!email === null) {
     user_id = await GetUserIdByEmail(email);
-  } else {
-    user_id = "not logged";
   }
   
-  if (!product || product.product_quantity === 0) {
-    console.log("this product is not avaliable");
-  }
-  console.log("1");
+  
   return (
-    <div>
-      <GetProduct product={product} user_id={user_id}/>
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
+      <GetProduct product={product} />
+      
+      <div className="bg-color_three p-4 rounded-lg shadow">
+        <ReviewsForm id={user_id} product_id={id} user={session.user} />
+      </div>
+      
+      <ProductReview id={id} />
     </div>
   )
 }
