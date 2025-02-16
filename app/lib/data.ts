@@ -317,3 +317,19 @@ export async function sendReview(
     console.error('Database Error:', error);
   }
 }
+
+export async function sendProductToCart(
+  quantity: number,
+  user_id: string,
+  product_id: string,
+){
+  try {
+    await sql
+    `
+      INSERT INTO cart (quantity, product_id, user_id)
+      VALUES(${quantity}, ${product_id}, ${user_id})
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
