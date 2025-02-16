@@ -1,3 +1,4 @@
+
 export type ProductsInfo = {
   product_id: string;
   product_name: string;
@@ -17,7 +18,7 @@ export type FeaturedProducts = {
 }
 
 export type UsersDefinitions = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   image: string;

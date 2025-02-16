@@ -130,7 +130,7 @@ export async function checkUserExist(email: string | null| undefined){
   }
 }
 
-export async function createNewUser(id:number, name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
+export async function createNewUser(id:string|undefined|null, name: string| null| undefined, email: string| null| undefined, image: string| null| undefined) {
   try {
     await sql<UsersDefinitions>
     `INSERT INTO users(id, name, email, image)
