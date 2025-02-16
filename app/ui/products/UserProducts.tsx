@@ -6,15 +6,15 @@ export default async function UserProducts({user_id} : {user_id: number}) {
     const featuredProducts = await getUserProducts(user_id);
   return (
     <>
-    <h2 className=''>Your products</h2>
-    <div key={1} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+    <h2 key={"your-products"} className=''>Your products</h2>
+    <div key={"user-products"} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {featuredProducts?.map(product => (
         <>
           <div>
             <Link href={`products/${product.product_id}`}>
             <div className="artist-card border rounded-lg overflow-hidden shadow-lg">
               <Image 
-                src={`/products/${product.product_image}`}
+                src={`${product.product_image}`}
                 alt={product.product_name} 
                 width={300} 
                 height={300} 
