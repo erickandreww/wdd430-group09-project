@@ -8,15 +8,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
   callbacks: {
     async signIn({user, profile}){
+      console.log(profile)
       const existingUser = await checkUserExist(user?.email);
       if (!existingUser) {
-        await createNewUser(Number(profile?.id),user?.name,user?.email,user?.image)
+        await createNewUser(profile?.id? profile?.id : profile?.sub?.substring(0,9), user?.name,user?.email,user?.image)
       }
       return true;
     },
     async jwt({token, account, profile}){
       if (account && profile) {
-      token.id = profile?.id 
+      token.id = profile?.id? profile?.id : profile?.sub?.substring(0,10)
       }
       return token;
     },
