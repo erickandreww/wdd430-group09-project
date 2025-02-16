@@ -13,23 +13,21 @@ const links = [
 export default function NavLinks() {
   const pathname = usePathname(); 
   return (
-    <>
-      {links.map((link) => {
-        return (
-          <Link 
-            key={link.name}
-            href={link.href}
-            className={clsx(
-              "block rounded-md px-4 py-2 text-foreground font-medium hover:bg-color_four hover:text-color_three",
-              {
-                'bg-color_four text-color_three': pathname === link.href,
-              },
-            )}
-          >
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
-        )
-      })}
-    </>
-  )
+    <div className="flex justify-center space-x-4 md:flex-col md:space-x-0 md:space-y-4">
+      {links.map((link) => (
+        <Link 
+          key={link.name}
+          href={link.href}
+          className={clsx(
+            "rounded-md px-4 py-2 text-foreground font-medium hover:bg-color_four hover:text-color_three",
+            {
+              'bg-color_four text-color_three': pathname === link.href,
+            },
+          )}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
+  );
 }
