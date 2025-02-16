@@ -12,7 +12,7 @@ export default function GetProduct({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
       <Image 
-        src={`/products/${product.product_image}`}
+        src={`${product.product_image}`}
         alt={product.product_name} 
         width={400}
         height={400}

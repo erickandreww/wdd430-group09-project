@@ -21,12 +21,12 @@ export default async function Page(props: {
   const totalPages = (await fetchProductsPages(query)) || 1;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-background">
       <div>
-        <h1 className="text-3xl font-bold mb-6">Products</h1>
+        <h1 className="text-3xl font-bold mb-6 text-foreground">Products</h1>
       </div>
       <div className="pb-5">
-        <Search placeholder="Search products..."/>
+        <Search placeholder="Search products..." />
       </div>
       <div className="p-5">
         <ProductCards query={query} currentPage={currentPage} />
