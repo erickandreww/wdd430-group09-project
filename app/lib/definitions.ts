@@ -54,3 +54,12 @@ export type Cart = {
   user_id: string; 
   product_id: string; 
 }
+
+export type ProductInformation = {
+  product_id: string;
+  product_name: string;
+  product_image: string;
+  product_price: number;
+  product_description: string;
+  product_quantity: number;
+}

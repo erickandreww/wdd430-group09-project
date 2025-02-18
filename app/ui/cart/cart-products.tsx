@@ -1,16 +1,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { HiTrash } from "react-icons/hi2";
-import { ProductsInfo } from "@/app/lib/definitions";
+
+import { Cart, ProductsInfo } from "@/app/lib/definitions";
+import DeleteProduct from "./DeleteProductCart";
 
 
-export function CartProducts({products, user_id}: {products: ProductsInfo[], user_id: string}) {
+export function CartProducts({products, user_id, cart}: {products: ProductsInfo[], user_id: string, cart:Cart[]}) {
 
   console.log(user_id);
 
   return (
-    <form action="">
+    <div>
       <div className="flex flex-col gap-4">
         {products.map((product) => (
           <div
@@ -42,16 +43,10 @@ export function CartProducts({products, user_id}: {products: ProductsInfo[], use
                 R$ {product.product_price}
               </p>
             </div>
-            <button
-              type="submit"
-              className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-red-500 text-white p-2 rounded-full 
-                hover:bg-red-600 transition-all"
-            >
-              <HiTrash className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
+            <DeleteProduct product={product} cart={cart}/>
           </div>
         ))}
       </div>
-    </form>
+    </div>
   )
 }
