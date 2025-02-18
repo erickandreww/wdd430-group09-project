@@ -1,52 +1,57 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getUserCart, getProductById } from "@/app/lib/data";
-import { Cart } from "@/app/lib/definitions";
+import { HiTrash } from "react-icons/hi2";
+import { ProductsInfo } from "@/app/lib/definitions";
 
 
-export async function CartProducts({id}: {id: string}) {
+export function CartProducts({products, user_id}: {products: ProductsInfo[], user_id: string}) {
 
-  const data: Cart[] = await getUserCart(id);
+  console.log(user_id);
 
-  if (!data) {
-    return (
-      <p>No products in the Cart</p>
-    )
-  }
-
-  let products: any[] = [];
-  await data.map(async product => {
-    let productData = await getProductById(product.product_id);
-
-    let productInfo = 
-      <Link key={product.product_id} href={`products/${product.product_id}`}>
-        <div className="border rounded-lg overflow-hidden shadow-lg border-color_three bg-color_four flex w-96">
-          <div className="relative min-w-[250px] w-[250px] min-h-[200px] h-[200px]">
-            <Image 
-              src={`${productData.product_image}`}
-              alt={productData.product_name} 
-              width={0} 
-              height={0} 
-              className="absolute inset-0 w-full h-full object-cover"
-              layout="fill"
-            />
-          </div>
-          <div className="p-4 text-center">
-            <h2 className="text-xl font-semibold text-color_three">{productData.product_name}</h2>
-            <p className="text-sm p-1 text-foreground">{productData.product_description}</p>
-            <p className="text-xl font-bold mt-2 text-color_three">R$ {productData.product_price}</p>
-          </div>
-        </div>
-      </Link>;
-    products.push(productInfo)
-  })
-  
-  console.log(products);
-  
   return (
-    <div>
-      {products}
-    </div>
+    <form action="">
+      <div className="flex flex-col gap-4">
+        {products.map((product) => (
+          <div
+            key={product.product_id}
+            className="border rounded-lg overflow-hidden shadow-lg border-color_three bg-color_four flex 
+              w-full sm:w-[400px] md:w-[480px] lg:w-[580px] 
+              h-[140px] sm:h-[165px] md:h-[180px] lg:h-[210px] relative"
+          >
+            <Link href={`products/${product.product_id}`} className="flex-shrink-0">
+              <div
+                className="border-4 border-color_three overflow-hidden 
+                  w-[130px] h-[140px] sm:w-[160px] sm:h-[165px] 
+                  md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[210px]"
+              >
+                <Image
+                  src={product.product_image}
+                  alt={product.product_name}
+                  width={200} // Max width for large screens
+                  height={210} // Max height for large screens
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </Link>
+            <div className="flex flex-col justify-center flex-grow px-4">
+              <h4 className="text-base sm:text-lg md:text-xl font-semibold text-color_three">
+                {product.product_name}
+              </h4>
+              <p className="text-sm sm:text-lg md:text-xl font-bold mt-1 text-color_three">
+                R$ {product.product_price}
+              </p>
+            </div>
+            <button
+              type="submit"
+              className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-red-500 text-white p-2 rounded-full 
+                hover:bg-red-600 transition-all"
+            >
+              <HiTrash className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </form>
   )
 }
