@@ -17,7 +17,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async jwt({token, account, profile}){
       if (account && profile) {
-      token.id = profile?.id? profile?.id : profile?.sub?.substring(0,10)
+      token.id = profile?.id? profile?.id : profile?.sub?.substring(0,9)
       }
       return token;
     },

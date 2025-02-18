@@ -3,6 +3,7 @@ import { CartProducts } from "../ui/cart/cart-products";
 import { getUserCart, getProductById } from "@/app/lib/data";
 import { Cart, ProductsInfo } from "@/app/lib/definitions";
 import { auth } from "@/auth";
+import PurchaseOrder from "../ui/cart/PurchaseOrder";
 
 export const metadata: Metadata = {
   title: 'Cart'
@@ -29,7 +30,8 @@ export default async function Page() {
     <div>
       <h2>Cart Products</h2>
       <div>
-        <CartProducts products={products} user_id={user_id}/>
+        <CartProducts products={products} user_id={user_id} cart={data}/>
+        <PurchaseOrder user_id={user_id} />
       </div>
       <div>
 

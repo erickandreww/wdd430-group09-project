@@ -363,3 +363,25 @@ export async function getUserCart(id: string) {
     return []; 
   }
 }
+
+export async function deleteUserCart(id: string){
+  try {
+    await sql
+    `
+      DELETE FROM cart WHERE user_id = ${id}
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function deleteProductCart(id:string){
+  try {
+    await sql
+    `
+      DELETE FROM cart WHERE cart_id = ${id}
+    `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
