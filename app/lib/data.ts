@@ -276,9 +276,10 @@ export async function addProductToCart(
  
 ) {
   try {
-    await sql<ProductToCart>`INSERT INTO cart(quantity, user_id, product_id)
+    const data = await sql<ProductToCart>`INSERT INTO cart(quantity, user_id, product_id)
     VALUES (${quantity}, ${user_id}, ${product_id})
     `
+    return data.rows[0]
   } catch (error) {
     console.error('Database Error:', error);
   }
@@ -318,7 +319,7 @@ export async function sendReview(
   }
 }
 
-export async function sendProductToCart(
+/*export async function sendProductToCart(
   quantity: number,
   user_id: string,
   product_id: string,
@@ -332,6 +333,19 @@ export async function sendProductToCart(
   } catch (error) {
     console.error('Database Error:', error);
   }
+}*/
+
+export async function updateProductQuantity(product_quantity:number, product_id:string){
+  try {
+    await sql
+    ` UPDATE products 
+      SET 
+      product_quantity=${product_quantity} 
+      WHERE product_id = ${product_id} RETURNING *`
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+
 }
 
 export async function getUserCart(id: string) {

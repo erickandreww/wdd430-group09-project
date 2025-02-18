@@ -37,7 +37,7 @@ export default async function Page(props: { params: Promise<{ id: string }>}) {
       <AddToCart 
         product_id={product.product_id} 
         user_id={user_id} 
-        quantity={product.product_quantity}
+        product_quantity={product.product_quantity}
       />
       <div className="bg-color_three p-4 rounded-lg shadow">
         <ReviewsForm id={user_id} product_id={id} user={{
