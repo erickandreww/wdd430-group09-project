@@ -12,3 +12,10 @@ export interface StringMap{
 export interface StringToBooleanMap{
     [key: string]: boolean;
 }
+
+export interface CartFormState<T>{
+    errors:StringMap;
+    successMsg?: string;
+    data?: T;
+    blurs?: StringToBooleanMap 
+}

@@ -6,7 +6,7 @@ export default async function UserProducts({user_id} : {user_id: number}) {
     const featuredProducts = await getUserProducts(user_id);
   return (
     <>
-    <h2 key={"your-products"} className=''>Your products</h2>
+    <h2 key={"your-products"} className='p-3 text-slate-800 text-2xl'>Your products</h2>
     <div key={"user-products"} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {featuredProducts?.map(product => (
         <>
@@ -28,8 +28,8 @@ export default async function UserProducts({user_id} : {user_id: number}) {
             </div>
             </Link>
             <div className='flex justify-between p-2 bg-slate-100 border rounded-lg overflow-hidden '>
-              <Link href={`/sellers/edit-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_five md:mt-0">Edit</Link>
-              <Link href={`/sellers/delete-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_five md:mt-0">Delete</Link>
+              <Link href={`/sellers/edit-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_three md:mt-0">Edit</Link>
+              <Link href={`/sellers/delete-product/${product.product_id}`} className="w-12 mt-2 font-medium text-black hover:text-color_three md:mt-0">Delete</Link>
             </div>
           </div>
         </>

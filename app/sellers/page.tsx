@@ -14,6 +14,7 @@ export default async function Page() {
   return(
     <div className="container mx-auto p-4">
       <UserProducts user_id={session? Number(session.id) : 0}/>
+      <h1></h1>
       <CreateButton />
     </div>
   )    
