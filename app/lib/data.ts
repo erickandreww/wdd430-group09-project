@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import { FeaturedProducts, ProductToCart, ProductsInfo, UsersDefinitions, ReviewsList } from "./definitions";
+import { FeaturedProducts, ProductToCart, ProductsInfo, UsersDefinitions, ReviewsList, Cart } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -72,7 +72,7 @@ export async function getProductById(id: string) {
       ...product
     }))
 
-    return product[0];
+    return product[0] as ProductsInfo;
   } catch (error) {
     console.error('Database Error:', error);
   }
@@ -346,4 +346,20 @@ export async function updateProductQuantity(product_quantity:number, product_id:
     console.error('Database Error:', error);
   }
 
+}
+
+export async function getUserCart(id: string) {
+  try {
+    const data = await sql`
+    SELECT 
+      * 
+    FROM cart
+    WHERE cart.user_id = ${id};
+    `;
+    
+    return data.rows as Cart[];
+  } catch (error) {
+    console.error(error);
+    return []; 
+  }
 }

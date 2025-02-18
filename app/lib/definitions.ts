@@ -47,3 +47,10 @@ export type SessionInfo = {
   email: string;
   image: string;
 }
+
+export type Cart = {
+  cart_id: string; 
+  quantity: number; 
+  user_id: string; 
+  product_id: string; 
+}
