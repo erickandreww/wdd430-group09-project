@@ -1,3 +1,10 @@
+export const formatCurrency = (amount: number) => {
+  return (amount / 1).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+};
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   if (totalPages <= 7) {
     return Array.from({ length: totalPages}, (_, i) => i + 1);
