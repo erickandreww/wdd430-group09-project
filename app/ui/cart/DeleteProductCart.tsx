@@ -16,8 +16,7 @@ export default function DeleteProduct({product, cart}: {product: ProductInformat
                 }  
             }  
             redirect("/cart")
-        }} className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-red-500 text-white p-2 rounded-full 
-        hover:bg-red-600 transition-all">
+        }} className="absolute bottom-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-all">
             <button type="submit"><HiTrash className="w-4 h-4 sm:w-5 sm:h-5" /></button>
         </form>
         </>
