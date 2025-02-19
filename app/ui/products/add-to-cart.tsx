@@ -50,15 +50,15 @@ export default function AddToCart({
   const options = getOptions(product_quantity)
 
   if(product_quantity === 0){
-    return <div>Sold out</div>
+    return <div className="text-red-500 font-semibold">Sold out</div>
   }else {
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="quantity-selected" className="text-md mt-2">Choose a Quantity</label>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="quantity-selected" className="text-md font-medium text-foreground">Choose a Quantity</label>
             <select 
               id="quantity" 
-              className="w-12"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-color_three"
               aria-describedby="quantity-error"
               {...register('quantity')}
             >
@@ -78,8 +78,8 @@ export default function AddToCart({
             )}
           </div>
 
-          <button type="submit" className="flex h-7 items-center bg-slate-400 px-3 text-sm font-medium text-black transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" >
-          {isSubmitting ? 'adding...' : 'Add to the cart'}
+          <button type="submit" className="w-full bg-color_three text-white font-semibold py-2 px-4 rounded-lg hover:bg-color_four transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed" >
+          {isSubmitting ? 'Adding...' : 'Add to the cart'}
           </button>
 
       </form>
