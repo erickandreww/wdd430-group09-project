@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { formatCurrency } from "@/app/lib/utils";
-import { ProductsInfo } from "@/app/lib/definitions";
+import { CartProductInfo } from "@/app/lib/definitions";
 import PurchaseOrder from "./PurchaseOrder";
 
-export function OrderCart({ products, user_id }: { products: ProductsInfo[], user_id: string }) {
+export function OrderCart({ products, user_id }: { products: CartProductInfo[], user_id: string }) {
   console.log(user_id);
 
-  const total = products.reduce((sum, product) => sum + Number(product.product_price * product.product_quantity), 0);
+  const total = products.reduce((sum, product) => sum + Number(product.product_price * product.quantity), 0);
 
   return (
     <div className="flex justify-center">
@@ -22,7 +22,7 @@ export function OrderCart({ products, user_id }: { products: ProductsInfo[], use
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="text-sm font-semibold text-color_three text-center">{formatCurrency(product.product_price * product.product_quantity)}</p>
+            <p className="text-sm font-semibold text-color_three text-center">{formatCurrency(product.product_price * product.quantity)}</p>
           </div>
         ))}
         <h4 className="text-lg font-bold text-color_three mt-4 text-center">Total: {formatCurrency(total)}</h4>

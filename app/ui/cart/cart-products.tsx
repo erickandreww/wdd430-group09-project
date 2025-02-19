@@ -2,11 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatCurrency } from "@/app/lib/utils";
-import { Cart, ProductsInfo } from "@/app/lib/definitions";
+import { Cart, CartProductInfo } from "@/app/lib/definitions";
 import DeleteProduct from "./DeleteProductCart";
 
 
-export function CartProducts({products, user_id, cart}: {products: ProductsInfo[], user_id: string, cart:Cart[]}) {
+export function CartProducts({products, user_id, cart}: {products: CartProductInfo[], user_id: string, cart:Cart[]}) {
 
   console.log(user_id);
 
@@ -32,7 +32,7 @@ export function CartProducts({products, user_id, cart}: {products: ProductsInfo[
             <div className="flex flex-col justify-center flex-grow px-4">
               <h4 className="text-lg font-semibold text-color_three">{product.product_name}</h4>
               <p className="text-base font-bold mt-1 text-color_three">{formatCurrency(product.product_price)}</p>
-              <p className="text-base font-bold mt-1 text-color_three"> Quantity: {product.product_quantity}</p>
+              <p className="text-base font-bold mt-1 text-color_three"> Quantity: {product.quantity}</p>
             </div>
             <DeleteProduct product={product} cart={cart}/>
           </div>

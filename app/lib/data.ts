@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 
-import { FeaturedProducts, ProductToCart, ProductsInfo, UsersDefinitions, ReviewsList, Cart } from "./definitions";
+import { FeaturedProducts, ProductToCart, ProductsInfo, 
+  UsersDefinitions, ReviewsList, Cart, CartProductInfo } from "./definitions";
 
 const ITEMS_PER_PAGE = 12;
 export async function fetchProducts(
@@ -381,6 +382,31 @@ export async function deleteProductCart(id:string){
     `
       DELETE FROM cart WHERE cart_id = ${id}
     `
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+}
+
+export async function getCartProduct(id: string, quantity: number) {
+  try {
+    const data = await sql<CartProductInfo>`
+    SELECT 
+      products.product_id, 
+      products.product_name, 
+      products.product_image, 
+      products.product_price, 
+      products.product_description, 
+      products.product_quantity, 
+      cart.quantity
+    FROM products JOIN cart ON products.user_id = cart.user_id AND cart.quantity = ${quantity}
+    WHERE products.product_id = ${id};
+    `;
+
+    const product = data.rows.map((product) => ({
+      ...product
+    }))
+
+    return product[0] as CartProductInfo;
   } catch (error) {
     console.error('Database Error:', error);
   }

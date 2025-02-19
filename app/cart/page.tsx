@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { getUserCart, getProductById } from "@/app/lib/data";
-import { Cart, ProductsInfo } from "@/app/lib/definitions";
+import { getUserCart, getCartProduct } from "@/app/lib/data";
+import { Cart, CartProductInfo } from "@/app/lib/definitions";
 import { CartProducts } from "../ui/cart/cart-products";
 import { OrderCart } from "../ui/cart/order";
 import { auth } from "@/auth";
@@ -24,9 +24,9 @@ export default async function Page() {
     );
   }
 
-  const products: ProductsInfo[] = (
-    await Promise.all(data.map(async (item) => await getProductById(item.product_id)))
-  ).filter((product): product is ProductsInfo => product !== undefined); 
+  const products: CartProductInfo[] = (
+    await Promise.all(data.map(async (item) => await getCartProduct(item.product_id, item.quantity)))
+  ).filter((product): product is CartProductInfo => product !== undefined); 
   
 
   return (
