@@ -8,8 +8,8 @@ export default function PurchaseOrder({ user_id}: { user_id: string}){
             "use server"
             await deleteUserCart(user_id)
             redirect("/cart/success")
-        }}>
-            <button type="submit">Send your order</button>
+        }} className="mt-4 w-1/2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors text-center">
+            <button type="submit" className="w-full">Order</button>
         </form>
         </>
     )
