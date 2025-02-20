@@ -13,7 +13,7 @@ export default async function Page() {
     const session = await auth()
     if (!session) redirect("/login")
     const userInformation = await getUserById(Number(session?.id))
-    if (!userInformation?.status) redirect(`/user/${session.id}`)
+    if (userInformation?.status === "client") redirect(`/user/${session.id}`)
   return(
     <div className="container mx-auto p-4">
       <UserProducts user_id={session? Number(session.id) : 0}/>
