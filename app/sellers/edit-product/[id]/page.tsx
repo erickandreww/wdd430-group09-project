@@ -16,7 +16,7 @@ export default async function Page({params}: {params: Promise<{id: string}>}){
       redirect("/login")
     } 
     const userInformation = await getUserById(Number(session?.id))
-    if (!userInformation?.status) redirect("/login")
+    if (!userInformation?.status) redirect(`/user/${session.id}`)
   return <>
     <p>Edit a product</p>
     <EditProduct productData= {productData}/>
