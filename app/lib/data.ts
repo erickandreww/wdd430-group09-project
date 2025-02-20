@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 import { FeaturedProducts, ProductToCart, ProductsInfo, 
   UsersDefinitions, ReviewsList, Cart, CartProductInfo } from "./definitions";
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 9;
 export async function fetchProducts(
   query: string,
   currentPage: number,
