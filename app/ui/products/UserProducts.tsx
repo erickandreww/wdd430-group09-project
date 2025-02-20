@@ -4,13 +4,20 @@ import { getUserProducts } from '@/app/lib/data';
 
 export default async function UserProducts({user_id} : {user_id: number}) {
     const featuredProducts = await getUserProducts(user_id);
+    if(!featuredProducts){
+      return (
+        <p className="text-center text-lg font-semibold text-color_three mt-6">
+        You dont have products published
+      </p>
+      )
+    }
   return (
     <>
-    <h2 key={"your-products"} className='p-3 text-slate-800 text-2xl'>Your products</h2>
-    <div key={"user-products"} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+    <h2 className='p-3 text-slate-800 text-2xl'>Your products</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {featuredProducts?.map(product => (
         <>
-          <div>
+          <div key={product.product_id}>
             <Link href={`products/${product.product_id}`}>
             <div className="artist-card border rounded-lg overflow-hidden shadow-lg">
               <Image 
