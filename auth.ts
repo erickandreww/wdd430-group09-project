@@ -8,7 +8,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
   callbacks: {
     async signIn({user, profile}){
-      console.log(profile)
       const existingUser = await checkUserExist(user?.email);
       if (!existingUser) {
         await createNewUser(profile?.id? profile?.id : profile?.sub?.substring(0,9), user?.name,user?.email,user?.image)

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Button from '../button';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -19,9 +19,9 @@ export default function Hero() {
         <p className="text-xl text-background mb-8 z-10 drop-shadow-lg max-w-2xl">
           Discover the vibrant world of art. <br /> Explore unique creations that blend color and creativity.
         </p>
-        <Button className="z-10 flex h-12 items-center bg-color_three px-8 text-sm font-medium text-background transition-all hover:bg-color_five hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color_three active:bg-color_three aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
+        <Link href="/products" className="z-10 flex h-12 items-center bg-color_three px-8 text-sm font-medium text-background transition-all hover:bg-color_five hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color_three active:bg-color_three aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
           Explore Now
-        </Button>
+        </Link>
       </div>
     </div>
   );

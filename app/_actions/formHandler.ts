@@ -12,7 +12,6 @@ export const formHandlerAction = async (product: Product):Promise<ProductFormSta
         const errors = convertZodErrors(validated.error)
         return {errors}
     }else{
-        console.log(validated.data)
         const{product_name, product_image, product_price, product_description, product_quantity, user_id} = validated.data
         await createNewProduct(product_name, product_image, product_price, product_description, product_quantity, user_id)
         return{successMsg: 'Product added successfully', errors:{}}
