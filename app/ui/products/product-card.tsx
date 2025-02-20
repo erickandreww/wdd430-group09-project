@@ -17,7 +17,7 @@ export default async function ProductCards({
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map(product => (
         <Link key={product.product_id} href={`products/${product.product_id}`}>
-        <div className="border rounded-lg overflow-hidden shadow-lg border-color_three bg-color_four flex flex-col h-full transition-transform transform hover:scale-105">
+        <div className="border-2 rounded-lg overflow-hidden shadow-lg border-color_three bg-color_two flex flex-col h-full transition-transform transform hover:scale-105">
           <div className="w-full h-64 relative">
             <Image 
               src={product.product_image}
