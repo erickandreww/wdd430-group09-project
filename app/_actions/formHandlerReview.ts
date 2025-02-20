@@ -12,7 +12,6 @@ export const formHandlerActionReview = async (review: Review):Promise<ReviewForm
         const errors = convertZodErrors(validated.error)
         return {errors}
     }else{
-        console.log(validated.data)
         const{rating, review_text, user_id, product_id} = validated.data
         await sendReview(rating, review_text, Number(product_id), user_id)
         return{successMsg: 'Product added successfully', errors:{}}

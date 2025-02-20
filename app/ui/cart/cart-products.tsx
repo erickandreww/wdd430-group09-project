@@ -6,9 +6,7 @@ import { Cart, CartProductInfo } from "@/app/lib/definitions";
 import DeleteProduct from "./DeleteProductCart";
 
 
-export function CartProducts({products, user_id, cart}: {products: CartProductInfo[], user_id: string, cart:Cart[]}) {
-
-  console.log(user_id);
+export function CartProducts({products, cart}: {products: CartProductInfo[], cart:Cart[]}) {
 
   return (
     <div>

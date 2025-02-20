@@ -4,7 +4,6 @@ import { CartProductInfo } from "@/app/lib/definitions";
 import PurchaseOrder from "./PurchaseOrder";
 
 export function OrderCart({ products, user_id }: { products: CartProductInfo[], user_id: string }) {
-  console.log(user_id);
 
   const total = products.reduce((sum, product) => sum + Number(product.product_price * product.quantity), 0);
 

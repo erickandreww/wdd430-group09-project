@@ -6,7 +6,6 @@ import { HiShoppingCart } from "react-icons/hi2";
 
 export default async function Heading () {
   const session = await auth()
-  console.log(session?.id)
   return (
     <header className="sticky top-0 z-50 flex flex-col items-center bg-color_three p-4 text-color_four md:flex-row md:justify-between md:items-center">
       <div className="flex items-center space-x-4">
