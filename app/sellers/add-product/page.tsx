@@ -1,3 +1,4 @@
+import { getUserById } from "@/app/lib/data";
 import CreateForm from "@/app/ui/sellers/CreateForm";
 import { auth } from "@/auth";
 import { Metadata } from "next";
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 export default async function Page() {
     const session = await auth()
     if(!session) redirect("/login")
+    const userInformation = await getUserById(Number(session?.id))
+    if (!userInformation?.status) redirect("/login")
   return <>
     <p>Add a product</p>
     <CreateForm userId={session? session.id : ""}/>

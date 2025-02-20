@@ -150,7 +150,7 @@ export async function getUserById(id:number){
     FROM users
     WHERE id= ${id};
     `
-    return data.rows
+    return data.rows[0]
   } catch (error) {
     console.error(error)
   }

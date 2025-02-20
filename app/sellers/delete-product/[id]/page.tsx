@@ -1,4 +1,4 @@
-import { productById } from "@/app/lib/data";
+import { getUserById, productById } from "@/app/lib/data";
 import DeleteProduct from "@/app/ui/sellers/DeleteProduct";
 import { auth } from "@/auth";
 import { Metadata } from "next";
@@ -15,6 +15,8 @@ export default async function Page({params}: {params: Promise<{id: string}>}){
     if(!session){
       redirect("/login")
     } 
+    const userInformation = await getUserById(Number(session?.id))
+    if (!userInformation?.status) redirect("/login")
   return <>
     <p>Edit a product</p>
     <DeleteProduct productData= {productData}/>
